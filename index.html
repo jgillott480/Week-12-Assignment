@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Ice Cream Application</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Favorite Ice Cream Application</h1>
+        
+        <!-- Form for user input -->
+        <form id="postForm">
+            <div class="form-group">
+                <label for="icecreamInput">Add your favorite below:</label>
+                <input type="text" class="form-control" id="icecreamInput" placeholder="Enter your favorite ice cream flavor" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add to List</button>
+        </form>
+        
+        <hr>
+        
+        <!-- Display list of favorite ice cream flavors -->
+        <ul id="icecreamList" class="list-group mt-3">
+            
+        </ul>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#postForm').submit(function(event) {
+                event.preventDefault();
+
+                // Get the value from the input
+                var icecreamInput = $('#icecreamInput').val();
+                
+                // Add the ice cream flavor to the list
+                var icecreamItem = `<li class="list-group-item">${icecreamInput} 
+                                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                    <button class="btn btn-info btn-sm edit-btn">Edit</button></li>`;
+                $('#icecreamList').append(icecreamItem);
+
+                // Clear the input field
+                $('#icecreamInput').val('');
+            });
+
+            $('#icecreamList').on('click', '.delete-btn', function() {
+                $(this).parent().remove();
+            });
+
+            $('#icecreamList').on('click', '.edit-btn', function() {
+                var currentText = $(this).parent().text().trim();
+                var updatedText = prompt("Update the ice cream flavor:", currentText);
+
+                // Update the text with user input
+                if (updatedText) {
+                    var updatedItem = `<li class="list-group-item">${updatedText} 
+                                      <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                                      <button class="btn btn-info btn-sm edit-btn">Edit</button></li>`;
+                    $(this).parent().replaceWith(updatedItem);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
